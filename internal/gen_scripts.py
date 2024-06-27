@@ -1,10 +1,10 @@
 import os
 import sys
-sys.path.append('./benchmark')
+sys.path.append('../benchmark')
 
 from torchbenchmark import _list_model_paths
 
-DEST = 'models'
+DEST = '../models'
 
 def main():
   with open('template.py') as f:
