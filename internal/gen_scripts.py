@@ -1,3 +1,5 @@
+# script used to write model_name.py under run_torchbench/models/
+
 import os
 import sys
 sys.path.append('../benchmark')
