@@ -20,21 +20,22 @@ def main():
     benchmark_cls = getattr(module, "Model", None)
     benchmark = benchmark_cls(test="eval", device = "cpu")
     model, example = benchmark.get_module()
-
     # Run the model once in torch
     expected = model(*example)
+    import pdb; pdb.set_trace()
 
 
     env = torch_xla2.default_env()
     # Debug options to change:
-    env.config.debug_print_each_op = False
+    env.config.debug_print_each_op = True
     env.config.debug_accuracy_for_each_op = False
     env.config.debug_mixed_tensor = False
 
     # Move the model to "xla" i.e. jax
-    model = env.to_xla(model)
-    example = env.to_xla(example)
     with env:
+        model.to('jax')
+        example = env.to_xla(example)
+        # Run the model once in torch
         start = time.perf_counter()
         xla2_ans = model(*example)
         print(example)
