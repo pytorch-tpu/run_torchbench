@@ -17,7 +17,7 @@ https://github.com/pytorch/xla/tree/master/experimental/torch_xla2
 pip install torchvision torchaudio
 git clone https://github.com/pytorch/benchmark.git
 cd benchmark
-python install.py
+python3 install.py
 ```
 
 **NOTE:** `python install.py` will install ALL models. If you are only 
