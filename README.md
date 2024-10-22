@@ -24,6 +24,12 @@ python3 install.py
 interested in running one model, you can install it via `python install.py model_name`
 this way it will be much faster.
 
+**NOTE:*** if you met error like `ERROR: Cannot install -r requirements.txt (line 12) because these package versions have conflicting dependencies...`, please try to reinstall env with:
+```bash
+pip3 uninstall torch torchvision torchaudio -y
+pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
+```
+
 ### 3. Run one torch bench model under torch xla2
 
 ```python
