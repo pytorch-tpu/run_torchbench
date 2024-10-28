@@ -41,7 +41,8 @@ def main():
         end = time.perf_counter()
         print('Eager mode time', end - start)
 
-    print('Eager max abs vs expected', (torch_xla2.tensor.j2t(xla2_ans._elem) - expected).abs().max())
+    print('Eager max loc abs vs expected', (torch_xla2.tensor.j2t(xla2_ans.loc) - expected.loc).abs().max())
+    print('Eager max scale abs vs expected', (torch_xla2.tensor.j2t(xla2_ans.scale) - expected.scale).abs().max())
 
     def func_call(state, example):
       with env:
@@ -53,7 +54,8 @@ def main():
     xla2_ans = func_call(model.state_dict(), example)
     end = time.perf_counter()
     print('Jitted mode time', end - start)
-    print('Jitted max abs vs expected', (torch_xla2.tensor.j2t(xla2_ans._elem) - expected).abs().max())
+    print('Jitted max abs vs expected', (torch_xla2.tensor.j2t(xla2_ans.loc) - expected.loc).abs().max())
+    print('Jitted max abs vs expected', (torch_xla2.tensor.j2t(xla2_ans.scale) - expected.scale).abs().max())
     return 0
 
 
