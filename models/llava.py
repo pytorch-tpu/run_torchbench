@@ -22,7 +22,7 @@ def main():
     model, example = benchmark.get_module()
 
     # Run the model once in torch
-    expected = model(*example)
+    expected = model(**example)
 
 
     env = torch_xla2.default_env()
@@ -36,7 +36,7 @@ def main():
     example = env.to_xla(example)
     with env:
         start = time.perf_counter()
-        xla2_ans = model(*example)
+        xla2_ans = model(**example)
         print(example)
         end = time.perf_counter()
         print('Eager mode time', end - start)
