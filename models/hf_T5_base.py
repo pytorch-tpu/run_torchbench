@@ -56,7 +56,7 @@ def main():
     end = time.perf_counter()
     print('Jitted mode time', end - start)
     print('Jitted max abs vs expected: logits', (torch_xla2.tensor.j2t(xla2_ans.logits._elem) - expected.logits).abs().max())
-    print('Eager max abs vs expected: encoder_last_hidden_state', (torch_xla2.tensor.j2t(xla2_ans.encoder_last_hidden_state._elem) - expected.encoder_last_hidden_state).abs().max())
+    print('Jitted max abs vs expected: encoder_last_hidden_state', (torch_xla2.tensor.j2t(xla2_ans.encoder_last_hidden_state._elem) - expected.encoder_last_hidden_state).abs().max())
     return 0
 
 
