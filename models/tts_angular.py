@@ -45,7 +45,7 @@ def main():
 
     def func_call(state, example):
       with env:
-        return torch.func.functional_call(model, state, example, tie_weights=False)
+        return torch.func.functional_call(model, state, *example, tie_weights=False)
 
     # doing it jitted
     jitted = torch_xla2.interop.jax_jit(func_call)
