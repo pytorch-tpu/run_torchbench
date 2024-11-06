@@ -41,11 +41,12 @@ def main():
         end = time.perf_counter()
         print('Eager mode time', end - start)
 
-    print('Eager max abs vs expected', (torch_xla2.tensor.j2t(xla2_ans._elem) - expected).abs().max())
+    print('Eager max abs vs expected: pred_start', (torch_xla2.tensor.j2t(xla2_ans['pred_start']._elem) - expected['pred_start']).abs().max())
+    print('Eager max abs vs expected: pred_end', (torch_xla2.tensor.j2t(xla2_ans['pred_end']._elem) - expected['pred_end']).abs().max())
 
     def func_call(state, example):
       with env:
-        return torch.func.functional_call(model, state, example, tie_weights=False)
+        return torch.func.functional_call(model, state, *example, tie_weights=False)
 
     # doing it jitted
     jitted = torch_xla2.interop.jax_jit(func_call)
@@ -53,7 +54,8 @@ def main():
     xla2_ans = func_call(model.state_dict(), example)
     end = time.perf_counter()
     print('Jitted mode time', end - start)
-    print('Jitted max abs vs expected', (torch_xla2.tensor.j2t(xla2_ans._elem) - expected).abs().max())
+    print('Jitted max abs vs expected: pred_start', (torch_xla2.tensor.j2t(xla2_ans['pred_start']._elem) - expected['pred_start']).abs().max())
+    print('Jitted max abs vs expected: pred_end', (torch_xla2.tensor.j2t(xla2_ans['pred_end']._elem) - expected['pred_end']).abs().max())
     return 0
 
 
